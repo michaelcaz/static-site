@@ -7,7 +7,7 @@ const frontMatter = require('front-matter');
 const CONTENT_DIR = path.join(__dirname, '../src/content');
 const TEMPLATE_DIR = path.join(__dirname, '../src/templates');
 const STATIC_DIR = path.join(__dirname, '../src/static');
-const OUTPUT_DIR = path.join(__dirname, '../dist');
+const OUTPUT_DIR = path.join(__dirname, '../docs');
 
 // Read and parse template
 async function readTemplate(templateName) {
