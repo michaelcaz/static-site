@@ -6,19 +6,15 @@
 }
 
 :root {
-    --primary: #1A1A1A;
-    --highlight: #FFEB3B;
+    --coral: #FF4D2E;
     --white: #FFFFFF;
-    --gray-100: #F5F5F5;
-    --gray-200: #EEEEEE;
-    --gray-300: #E0E0E0;
-    --gray-600: #757575;
+    --dark: #1A1A1A;
 }
 
 body {
     font-family: 'Aeonik', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.5;
-    color: var(--primary);
+    color: var(--dark);
     background-color: var(--white);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -26,12 +22,12 @@ body {
 
 /* Announcement Bar */
 .announcement-bar {
-    background-color: var(--highlight);
+    background-color: var(--coral);
     text-align: center;
-    padding: 0.75rem;
-    font-size: 0.9375rem;
+    padding: 1rem;
+    font-size: 1rem;
     font-weight: 500;
-    letter-spacing: -0.01em;
+    color: var(--white);
 }
 
 .apply-link {
@@ -46,17 +42,16 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 2rem;
-    max-width: 1200px;
+    padding: 2rem;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .logo a {
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-size: 2rem;
+    font-weight: 700;
     text-decoration: none;
-    color: var(--primary);
-    letter-spacing: -0.02em;
+    color: var(--dark);
 }
 
 .logo-img {
@@ -65,16 +60,15 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     align-items: center;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: var(--primary);
+    color: var(--dark);
     font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: -0.01em;
+    font-size: 1.125rem;
 }
 
 .dropdown {
@@ -112,112 +106,101 @@ body {
 
 .cart-btn {
     padding: 0.75rem 1.5rem;
-    border: 2px solid var(--primary);
-    border-radius: 8px;
+    border: 2px solid var(--dark);
+    border-radius: 100px;
     background: transparent;
-    color: var(--primary);
+    color: var(--dark);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .cart-btn:hover {
-    background: var(--primary);
+    background: var(--dark);
     color: var(--white);
 }
 
 /* Hero Section */
 .hero {
-    text-align: center;
-    padding: 5rem 1rem;
-    max-width: 1000px;
+    text-align: left;
+    padding: 6rem 2rem;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .hero h1 {
-    font-size: 4.5rem;
+    font-size: 7.5rem;
     line-height: 1;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-    color: var(--primary);
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: var(--dark);
     letter-spacing: -0.04em;
 }
 
 .highlight {
-    background: var(--highlight);
-    padding: 0 0.25rem;
-    border-radius: 2px;
+    display: inline-block;
+    background: var(--coral);
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    color: var(--white);
+    position: relative;
+    z-index: 1;
 }
 
 .subtitle {
-    font-size: 1.25rem;
-    color: var(--gray-600);
-    margin-bottom: 2.5rem;
-    letter-spacing: -0.01em;
-    font-weight: 400;
+    font-size: 2rem;
+    color: var(--dark);
+    margin-bottom: 3rem;
+    font-weight: 500;
+    opacity: 0.8;
+    letter-spacing: -0.02em;
 }
 
 /* Search Container */
 .search-container {
     display: flex;
-    max-width: 600px;
-    margin: 0 auto;
-    background: var(--white);
-    border-radius: 50px;
-    border: 1px solid var(--gray-300);
-    padding: 0.5rem;
+    max-width: 500px;
+    margin: 0;
+    gap: 1rem;
 }
 
-.input-wrapper {
+.email-input {
     flex: 1;
-    display: flex;
-    align-items: center;
-    padding: 0 1rem;
-}
-
-.zip-input {
-    flex: 1;
-    padding: 0.75rem 0;
-    border: none;
+    padding: 1.25rem;
+    border: 2px solid var(--dark);
+    border-radius: 100px;
     font-size: 1.125rem;
     font-weight: 400;
     outline: none;
     background: transparent;
     font-family: 'Aeonik', sans-serif;
-    letter-spacing: -0.01em;
 }
 
-.zip-input::placeholder {
-    color: var(--gray-600);
+.email-input::placeholder {
+    color: var(--dark);
+    opacity: 0.5;
 }
 
-.chat-icon {
-    color: var(--gray-600);
-    font-size: 1.25rem;
-}
-
-.find-plan-btn {
-    padding: 0.875rem 1.75rem;
-    background: var(--primary);
+.cta-btn {
+    padding: 1.25rem 2rem;
+    background: var(--dark);
     color: var(--white);
     border: none;
-    border-radius: 25px;
-    font-weight: 500;
+    border-radius: 100px;
+    font-weight: 600;
     font-size: 1.125rem;
-    letter-spacing: -0.01em;
     cursor: pointer;
-    transition: background-color 0.2s;
-    font-family: 'Aeonik', sans-serif;
+    transition: opacity 0.2s;
 }
 
-.find-plan-btn:hover {
-    background: #333;
+.cta-btn:hover {
+    opacity: 0.9;
 }
 
 /* Features Section */
 .features {
     padding: 4rem 2rem;
-    background: var(--gray-100);
+    background: var(--white);
     margin: 4rem 0;
 }
 
@@ -260,16 +243,17 @@ body {
 }
 
 .product-card {
-    background: var(--gray-100);
-    border-radius: 16px;
+    background: var(--white);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
     padding: 2rem;
     text-align: center;
 }
 
 .product-image {
     height: 200px;
-    background: var(--gray-200);
-    border-radius: 8px;
+    background: var(--white);
+    border-radius: 16px;
     margin-bottom: 1.5rem;
 }
 
@@ -298,7 +282,7 @@ body {
 .testimonial {
     padding: 6rem 2rem;
     text-align: center;
-    background: var(--gray-100);
+    background: var(--white);
     margin: 4rem 0;
 }
 
@@ -321,7 +305,8 @@ body {
 
 /* Footer */
 footer {
-    background-color: var(--gray-100);
+    background-color: var(--white);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     padding: 4rem 2rem;
 }
 
@@ -366,19 +351,22 @@ footer {
         display: none;
     }
     
+    .hero {
+        text-align: center;
+        padding: 4rem 1rem;
+    }
+    
     .hero h1 {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
     
     .search-container {
         flex-direction: column;
-        gap: 1rem;
-        border-radius: 12px;
+        margin: 0 auto;
     }
     
-    .find-plan-btn {
+    .cta-btn {
         width: 100%;
-        border-radius: 6px;
     }
     
     .feature-grid,
