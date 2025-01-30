@@ -27,3 +27,4 @@ Next steps would be:
 Would you like me to continue with any specific part of this setup?
 
 
+# static-site
