@@ -3,32 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Site</title>
-    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <title>Stride - Health Insurance Made Simple</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/aeonik" rel="stylesheet">
 </head>
 <body>
-    <nav>
-        <a href="./">Home</a>
-        <a href="./blog">Blog</a>
-        <a href="./about.html">About</a>
-        <a href="./faq.html">FAQ</a>
-    </nav>
+    <div class="announcement-bar">
+        CA residents: Get covered by 1/30 <a href="#" class="apply-link">Apply now →</a>
+    </div>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <a href="./"><img src="./images/stride-logo.svg" alt="Stride" class="logo-img">Stride</a>
+            </div>
+            <div class="nav-links">
+                <a href="./dashboard">My Dashboard</a>
+                <div class="dropdown">
+                    <a href="./insurance" class="dropdown-toggle">Insurance <span class="arrow">▾</span></a>
+                </div>
+                <a href="./tax-tools">Tax Tools</a>
+                <a href="./savings">Savings</a>
+                <div class="dropdown">
+                    <a href="./more" class="dropdown-toggle">More <span class="arrow">▾</span></a>
+                </div>
+                <a href="./about">About Us</a>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </nav>
+    </header>
+    
     <main>
-        <h1 id="welcome">Welcome</h1>
-<p>This is the homepage of my static site. It&#39;s built with simple tools and pure HTML, CSS, and JavaScript.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Fast and lightweight</li>
-<li>Easy to maintain</li>
-<li>Built with markdown</li>
-<li>No complex frameworks</li>
-</ul>
-<p><a href="/blog">Read the Blog</a> </p>
+        <section class="hero">
+            <h1>Save an average of $447/mo on <span class="highlight">health insurance.</span></h1>
+            <p class="subtitle">Find the best plan at the lowest possible price, in 5 minutes or less.</p>
+            
+            <div class="search-container">
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Enter zip code" class="zip-input">
+                    <span class="chat-icon">💬</span>
+                </div>
+                <button class="find-plan-btn">Find my plan</button>
+            </div>
+        </section>
 
+        <section class="image-grid">
+            <div class="grid-container">
+                <!-- Images will be added here -->
+            </div>
+        </section>
     </main>
-    <footer>
-        <p>&copy; 2024 Your Site</p>
-    </footer>
 </body>
 </html> 
