@@ -7,7 +7,7 @@ const frontMatter = require('front-matter');
 const CONTENT_DIR = path.join(__dirname, '../src/content');
 const TEMPLATE_DIR = path.join(__dirname, '../src/templates');
 const STATIC_DIR = path.join(__dirname, '../src/static');
-const OUTPUT_DIR = path.join(__dirname, '../docs');
+const OUTPUT_DIR = path.join(__dirname, '../dist');
 
 // Read and parse template
 async function readTemplate(templateName) {
@@ -17,9 +17,13 @@ async function readTemplate(templateName) {
 
 // Process markdown files
 async function processMarkdown(filePath) {
+    console.log('Reading file:', filePath);
     const content = await fs.readFile(filePath, 'utf-8');
+    console.log('Raw content:', content);
     const { attributes, body } = frontMatter(content);
+    console.log('Parsed frontmatter:', { attributes, body });
     const html = marked(body);
+    console.log('Generated HTML:', html);
     return { attributes, html };
 }
 
@@ -33,16 +37,23 @@ function applyTemplate(template, data) {
 }
 
 async function processPages() {
+    console.log('Starting page processing...');
     // Read base template
     const baseTemplate = await readTemplate('base.html');
+    console.log('Loaded base template');
 
     // Process pages
     const pagesDir = path.join(CONTENT_DIR, 'pages');
     const pages = await fs.readdir(pagesDir);
-
+    console.log('Found pages:', pages);
+    
     for (const page of pages) {
         if (page.endsWith('.md')) {
-            const { attributes, html } = await processMarkdown(path.join(pagesDir, page));
+            console.log('\nProcessing:', page);
+            const fullPath = path.join(pagesDir, page);
+            const { attributes, html } = await processMarkdown(fullPath);
+            console.log('Final data:', { attributes, html });
+            
             const finalHtml = applyTemplate(baseTemplate, {
                 title: attributes.title || 'Untitled',
                 content: html
@@ -52,6 +63,7 @@ async function processPages() {
                 OUTPUT_DIR, 
                 page.replace('.md', '.html')
             );
+            console.log('Writing to:', outputPath);
             await fs.outputFile(outputPath, finalHtml);
         }
     }
