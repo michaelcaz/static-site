@@ -5,7 +5,7 @@
   "main": "scripts/build.js",
   "scripts": {
     "build": "node scripts/build.js",
-    "dev": "npx serve dist",
+    "dev": "npx serve docs",
     "serve": "npx http-server docs"
   },
   "dependencies": {
