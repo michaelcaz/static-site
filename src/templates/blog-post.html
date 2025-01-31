@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/">
-    <title>Hello World - Blog</title>
+    <title>{{title}} - Blog</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <style>
@@ -202,26 +202,14 @@
     <main class="blog-post">
         <article>
             <header>
-                <h1>Hello World</h1>
+                <h1>{{title}}</h1>
                 <div class="post-meta">
-                    <time datetime="March 19, 2024">March 19, 2024</time>
-                    <span class="author">by Your Name</span>
+                    <time datetime="{{date}}">{{date}}</time>
+                    {{#if author}}<span class="author">by {{author}}</span>{{/if}}
                 </div>
             </header>
             
-            <h1 id="hello-world">Hello World!</h1>
-<p>Welcome to my first blog post. This is a sample post to demonstrate how the blog system works.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Markdown support</li>
-<li>Front matter for metadata</li>
-<li>Code syntax highlighting</li>
-<li>And more!</li>
-</ul>
-<pre><code class="language-javascript">console.log(&quot;Hello, World!&quot;);
-</code></pre>
-<p>Feel free to edit this post or create new ones in the <code>src/content/blog</code> directory. </p>
-
+            {{content}}
         </article>
         
         <div class="newsletter-section">

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(5, 5)">
+    <rect x="0" y="0" width="30" height="30" fill="#FFD700"/>
+    <text x="8" y="23" font-family="Arial Black, sans-serif" font-size="20" fill="#00205B">R</text>
+    <text x="40" y="23" font-family="Arial, sans-serif" font-weight="bold" font-size="20" fill="#00205B">RAMSEY</text>
+    <text x="40" y="35" font-family="Arial, sans-serif" font-size="12" fill="#666">SOLUTIONS</text>
+  </g>
+</svg> 

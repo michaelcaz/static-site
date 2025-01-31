@@ -30,9 +30,35 @@ async function processMarkdown(filePath) {
 // Apply template
 function applyTemplate(template, data) {
     let result = template;
+    
+    // Handle conditionals first
+    result = result.replace(/{{#if (\w+)}}(.*?){{\/if}}/gs, (match, key, content) => {
+        return data[key] ? content : '';
+    });
+    
+    // Handle each loops
+    result = result.replace(/{{#each (\w+)}}(.*?){{\/each}}/gs, (match, key, content) => {
+        if (!Array.isArray(data[key])) return '';
+        return data[key].map(item => {
+            let itemContent = content;
+            // Replace variables within the each block
+            for (const [itemKey, itemValue] of Object.entries(item)) {
+                itemContent = itemContent.replace(
+                    new RegExp(`{{${itemKey}}}`, 'g'),
+                    itemValue
+                );
+            }
+            return itemContent;
+        }).join('\n');
+    });
+    
+    // Handle regular variables
     for (const [key, value] of Object.entries(data)) {
-        result = result.replace(new RegExp(`{{${key}}}`, 'g'), value);
+        if (typeof value === 'string' || typeof value === 'number') {
+            result = result.replace(new RegExp(`{{${key}}}`, 'g'), value);
+        }
     }
+    
     return result;
 }
 
@@ -70,93 +96,106 @@ async function processPages() {
 }
 
 async function processBlogPosts() {
+    console.log('Processing blog posts...');
     const blogDir = path.join(CONTENT_DIR, 'blog');
-    const blogTemplate = await readTemplate('blog.html');
-    const posts = await fs.readdir(blogDir);
+    const outputBlogDir = path.join(OUTPUT_DIR, 'blog');
     
-    // Store post metadata for the index page
-    const postsList = [];
-
-    for (const post of posts) {
-        if (post.endsWith('.md')) {
-            const { attributes, html } = await processMarkdown(path.join(blogDir, post));
-            
-            // Add to posts list
-            postsList.push({
-                title: attributes.title,
-                date: attributes.date,
-                author: attributes.author,
-                slug: post.replace('.md', ''),
-                excerpt: attributes.excerpt || html.split('\n')[0]
-            });
-
-            // Generate individual post page
-            const finalHtml = applyTemplate(blogTemplate, {
-                title: attributes.title,
-                date: attributes.date,
-                author: attributes.author || '',
-                content: html
-            });
-
-            const outputPath = path.join(
-                OUTPUT_DIR,
-                'blog',
-                post.replace('.md', '.html')
-            );
-            await fs.outputFile(outputPath, finalHtml);
-        }
+    // Create blog directory if it doesn't exist
+    await fs.ensureDir(outputBlogDir);
+    
+    // Read blog post template
+    const blogPostTemplate = await readTemplate('blog-post.html');
+    
+    // Get all markdown files
+    const posts = [];
+    const files = await fs.readdir(blogDir);
+    
+    for (const file of files) {
+        if (!file.endsWith('.md')) continue;
+        
+        const filePath = path.join(blogDir, file);
+        const { attributes, html } = await processMarkdown(filePath);
+        
+        // Generate URL-friendly slug from filename
+        const slug = path.basename(file, '.md');
+        const url = `${slug}.html`;
+        
+        // Format the date
+        const date = new Date(attributes.date);
+        const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        // Add to posts array for index generation
+        posts.push({
+            ...attributes,
+            url,
+            content: html,
+            date: formattedDate
+        });
+        
+        // Apply blog post template
+        const postHtml = applyTemplate(blogPostTemplate, {
+            ...attributes,
+            content: html,
+            date: formattedDate
+        });
+        
+        // Write blog post HTML
+        await fs.writeFile(
+            path.join(outputBlogDir, `${slug}.html`),
+            postHtml
+        );
     }
-
+    
     // Sort posts by date
-    postsList.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    // Generate blog index page
-    const blogIndexHtml = generateBlogIndex(postsList);
-    const baseTemplate = await readTemplate('base.html');
-    const finalIndexHtml = applyTemplate(baseTemplate, {
-        title: 'Blog',
-        content: blogIndexHtml
-    });
-
-    await fs.outputFile(path.join(OUTPUT_DIR, 'blog', 'index.html'), finalIndexHtml);
+    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    // Generate blog index
+    await generateBlogIndex(posts);
 }
 
-function generateBlogIndex(posts) {
-    return `
-        <h1>Blog Posts</h1>
-        <div class="posts-list">
-            ${posts.map(post => `
-                <article class="post-preview">
-                    <h2><a href="/blog/${post.slug}.html">${post.title}</a></h2>
-                    <div class="meta">
-                        <time>${post.date}</time>
-                        ${post.author ? `<span class="author">by ${post.author}</span>` : ''}
-                    </div>
-                    <p>${post.excerpt}</p>
-                    <a href="/blog/${post.slug}.html" class="read-more">Read more →</a>
-                </article>
-            `).join('\n')}
-        </div>
-    `;
+async function generateBlogIndex(posts) {
+    console.log('Generating blog index...');
+    const blogIndexTemplate = await readTemplate('blog-index.html');
+    
+    const indexHtml = applyTemplate(blogIndexTemplate, {
+        posts: posts.map(post => ({
+            ...post,
+            date: new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            })
+        }))
+    });
+    
+    await fs.writeFile(
+        path.join(OUTPUT_DIR, 'blog/index.html'),
+        indexHtml
+    );
 }
 
 async function build() {
     try {
-        // Clean and recreate output directory
+        // Clear output directory
         await fs.emptyDir(OUTPUT_DIR);
-
+        
         // Copy static files
         await fs.copy(STATIC_DIR, OUTPUT_DIR);
-
+        
         // Process regular pages
         await processPages();
-
+        
         // Process blog posts
         await processBlogPosts();
-
+        
         console.log('Build completed successfully!');
     } catch (error) {
         console.error('Build failed:', error);
+        process.exit(1);
     }
 }
 

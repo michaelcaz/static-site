@@ -2,18 +2,22 @@
 title: Hello World
 date: 2024-03-20
 author: Your Name
+excerpt: Welcome to my first blog post!
 ---
 
-# Hello World
+# Hello World!
 
-This is my first blog post using this simple static site generator.
+Welcome to my first blog post. This is a sample post to demonstrate how the blog system works.
 
-## Why I Built This
+## Features
 
-I wanted a simple way to create and maintain a website without the complexity of modern frameworks.
+- Markdown support
+- Front matter for metadata
+- Code syntax highlighting
+- And more!
 
-## Features I'm Planning
+```javascript
+console.log("Hello, World!");
+```
 
-1. RSS Feed
-2. Tags support
-3. Search functionality 
+Feel free to edit this post or create new ones in the `src/content/blog` directory. 
